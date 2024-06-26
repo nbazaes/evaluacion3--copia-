@@ -16,7 +16,7 @@ document.getElementById('btnSave').addEventListener('click', () => {
             sueldo: document.getElementById('sueldo').value
         }
         /* si el id es vacio se guarda */
-        
+
 
         if (id == '') {
             getAll(datos => {
@@ -28,17 +28,9 @@ document.getElementById('btnSave').addEventListener('click', () => {
                     console.log(item.codBanda)
                 })
             })
-            if (false)
-                console.log("estoy aqui")
-            else {
-                console.log(persona.codBanda)
-                save(persona)
-                Swal.fire({
-                    title: "¡Listo!",
-                    text: "Registro guardado correctamente",
-                    icon: "success"
-                });
-            }
+
+            save(persona)
+
 
         }
 

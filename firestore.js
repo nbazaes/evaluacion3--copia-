@@ -1,7 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 // funciones de firestore
-import { addDoc, collection, deleteDoc, doc, getDoc, updateDoc, getFirestore, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { addDoc, collection, deleteDoc, doc, getDoc, updateDoc, getFirestore, onSnapshot, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -22,11 +22,16 @@ const db = getFirestore(app);
 //save es una función creada que invoca la función de firestore para guardar
 export const save = async (emp) => {
 
-    const cod = emp.codBanda; //run es el atributo del objeto emp
-    const query = query(collection(db, 'bandas'), where('codBanda', '==', codBanda)) //
+    const codBanda = emp.codBanda;
+    const q = query(collection(db, 'bandas'), where('codBanda', '==', codBanda)) //
     const querySnapshot = await getDocs(q)
 
     if (querySnapshot.empty) {
+        Swal.fire({
+            title: "¡Listo!",
+            text: "Registro guardado correctamente",
+            icon: "success"
+        });
         await addDoc(collection(db, 'bandas'), emp)
     } else { //
         Swal.fire({
