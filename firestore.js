@@ -20,10 +20,21 @@ const app = initializeApp(firebaseConfig);
 //getFirestore es la función  que permite traer la base de datos para su utilización
 const db = getFirestore(app);
 //save es una función creada que invoca la función de firestore para guardar
-export const save = (emp) => {
-    /* addDoc es la funcion de firestore que guarda un documento en una coleccion
-    collection es una funcion de firestore que permite acceder a una coleccion de la base de datos */
-    addDoc(collection(db, 'bandas'), emp)
+export const save = async (emp) => {
+
+    const cod = emp.codBanda; //run es el atributo del objeto emp
+    const query = query(collection(db, 'bandas'), where('codBanda', '==', codBanda)) //
+    const querySnapshot = await getDocs(q)
+
+    if (querySnapshot.empty) {
+        await addDoc(collection(db, 'bandas'), emp)
+    } else { //
+        Swal.fire({
+            title: "Error",
+            text: "El código ingresado ya está siento utilizado. Elija otro",
+            icon: "error"
+        })
+    }
 }
 
 export const getAll = (data) => {
@@ -45,7 +56,7 @@ getDoc es la funcion de Firestore que permite retornar un documento seleccionado
 
 export const selectOne = (id) => getDoc(doc(db, 'bandas', id))
 
-export const update = (id,emp) =>{
+export const update = (id, emp) => {
     /* updateDoc es una función de firestore que permite editar un documento en una colección */
-    updateDoc(doc(db,'bandas',id),emp)
+    updateDoc(doc(db, 'bandas', id), emp)
 }
